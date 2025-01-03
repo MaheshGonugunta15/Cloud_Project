@@ -1,0 +1,58 @@
+
+{% if session["role"] == 'Admin':%}
+    {% include 'adminHead.html' %}
+{% elif session["role"] == 'Client':%}
+    {% include 'clientHead.html' %}
+{% elif session["role"] == 'Developer':%}
+    {% include 'developerHead.html' %}
+{% else:%}
+    {% include 'head.html' %}
+{% endif %}
+
+<div class="container">
+    <div class="row">
+            <div class="text-center mt-1" style="font-size:30px;color:black">Project Details</div>
+            {% set category = get_category_id(project['category_id'])%}
+            {% set client = get_client_id(project['client_id'])%}
+            <div class=" card mt-3 p-3" style="border-radius: 50px 20px;box-shadow: 5px 10px #888888;" >
+                <div class="row">
+                 <div class="col-md-2 mt-1">
+                     <div class="text-muted">Client Name</div>
+                    <div class=""><b>{{client['name']}}</b></div>
+                </div>
+                <div class="col-md-2">
+                    <div class="text-muted">Category Name</div>
+                    <div class=""><b>{{category['category_name']}}</b></div>
+                </div>
+                <div class="col-md-2 mt-1">
+                    <div class="text-muted">Project Title</div>
+                    <div class=""><b>{{project['project_title']}}</b></div>
+                </div>
+                <div class="col-md-1 mt-1">
+                    <div class="text-muted">Skills</div>
+                    <div class=""><b>{{project['skills']}}</b></div>
+                </div>
+                <div class="col-md-1 mt-1">
+                    <div class="text-muted">Price</div>
+                    <div class=""><b>$ {{project['project_cost']}}</b></div>
+                </div>
+                <div class="col-md-1 mt-1">
+                     <div class="text-muted">Date</div>
+                    <div class=""><b>{{project['date'].strftime("%x")}}</b></div>
+                </div>
+                    <div class="col-md-3 mt-1">
+                        <div class="text-muted">Status</div>
+                        <div class=""><b>{{project['status']}}</b></div>
+                   </div>
+                    <div class="col-md-10 mt-1"></div>
+                <div class="col-md-2 mt-1">
+                    <a href="../static/document/{{project['project_doc']}}"  class="btn btn-primary w-70" style="border-radius:50px;">View Documents</a>
+                </div>
+                </div>
+                 <div class="mt-2">
+                    <div class="text-muted">Description</div>
+                    <div class="mt-1 h6">{{project['description']}}</div>
+                </div>
+            </div>
+    </div>
+</div>

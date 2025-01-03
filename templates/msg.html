@@ -1,0 +1,14 @@
+{% if session["role"] == 'Admin':%}
+    {% include 'adminHead.html' %}
+{% elif session["role"] == 'Client':%}
+    {% include 'clientHead.html' %}
+{% elif session["role"] == 'Developer':%}
+    {% include 'developerHead.html' %}
+{% else %}
+    {% include 'head.html' %}
+{% endif %}
+<div style="position:absolute;left:0;top:100px;z-index:1000;width:100%;">
+<div class="container">
+    <div class="text-center h3 {{color}}">{{message}}</div>
+</div>
+</div>

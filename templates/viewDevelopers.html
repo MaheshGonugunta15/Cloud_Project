@@ -1,0 +1,36 @@
+
+{% include 'adminHead.html'%}
+<div style="position:absolute;left:0;top:100px;z-index:1000;width:100%;">
+<div class="container">
+  <div class="row">
+    <div class="text-center h4">View Developer</div>
+    <table class="table table-primary table-bordered mt-4">
+      <tr>
+        <thead>
+          <th>Developer Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Status</th>
+          <th>Action</th>
+        </thead>
+      </tr>
+      <tbody>
+       {% for developer in developers: %}
+       <tr>
+        <td>{{developer[1]}}</td>
+        <td>{{developer[2]}}</td>
+        <td>{{developer[4]}}</td>
+        <td>{{developer[5]}}</td>
+        <td>{% if developer[5]=='Not Verified': %}
+            <a href="verifyDeveloper?developer_id={{developer[0]}}"  class="btn btn-primary w-100">Verify</a>
+         {% else %}
+            <a href="notVerifyDeveloper?developer_id={{developer[0]}}"  class="btn btn-danger w-100">Not Verified</a>
+        {% endif %}
+        </td>
+       </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>

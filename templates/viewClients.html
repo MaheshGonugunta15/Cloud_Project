@@ -1,0 +1,39 @@
+
+{% include 'adminHead.html'%}
+<div style="position:absolute;left:0;top:100px;z-index:1000;width:100%;">
+<div class="container">
+  <div class="row">
+    <div class="text-center h4">View Clients</div>
+    <table class="table table-primary table-bordered mt-4">
+      <tr>
+        <thead>
+          <th>Client Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Address</th>
+          <th>About</th>
+          <th>Status</th>
+          <th>Action</th>
+        </thead>
+      </tr>
+      <tbody>
+       {% for client in clients: %}
+       <tr>
+        <td>{{client[1]}}</td>
+        <td>{{client[2]}}</td>
+        <td>{{client[4]}}</td>
+        <td>{{client[6]}}</td>
+        <td>{{client[7]}}</td>
+        <td>{{client[5]}}</td>
+        <td>{% if client[5]=='Not Verified': %}
+            <a href="verifyClient?client_id={{client[0]}}"  class="btn btn-primary w-100">Verify</a>
+         {% else %}
+            <a href="notVerifyClient?client_id={{client[0]}}"  class="btn btn-danger w-100">Not Verified</a>
+        {% endif %}
+        </td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>

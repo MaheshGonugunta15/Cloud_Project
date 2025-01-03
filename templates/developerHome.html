@@ -1,0 +1,18 @@
+{% include 'developerHead.html'%}
+
+<div class="container">
+    <div class="row">
+        {% for developer in developers:%}
+           <div class="col-md-3">
+               <div class="card mt-5 p-3" style="border-radius: 50px 20px;box-shadow: 5px 10px #888888;">
+                   <div class=" text-center mt-1"><b>{{developer[1]}}</b></div>
+                   <div class="text-center mt-1">{{developer[2]}}</div>
+                   <div class="text-center mt-1">{{developer[4]}}</div>
+                   <div class="mt-2">
+                       <a href="uploadResume" class="btn btn-primary w-100" style="font-size:15px">Upload Resume</a>
+                   </div>
+               </div>
+           </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,70 @@
+{% if session["role"] == 'Admin':%}
+    {% include 'adminHead.html' %}
+{% elif session["role"] == 'Client':%}
+    {% include 'clientHead.html' %}
+{% elif session["role"] == 'Developer':%}
+    {% include 'developerHead.html' %}
+{% else:%}
+    {% include 'head.html' %}
+{% endif %}
+
+<div class="container">
+     <div class="row">
+          <div class="col-md-4">
+            <div class="card mt-5 p-3" style="border-radius: 50px 20px;box-shadow: 5px 10px #888888;">
+                <div class="text-center mt-1" style="font-size:30px;color:black">Schedule Details</div>
+                    {% for schedule in schedules%}
+                {% set project = get_project_id(schedule[3])%}
+                  {% set developer = get_developer_id_by_application(schedule[4])%}
+                {% set average_rating = get_developer_id_by_reviews(developer[0])%}
+                {% set client = get_client_id(project[8])%}
+
+                <div class="row">
+                     <div class="col-md-6 mt-3">
+                         <div class="text-muted">Client Name</div>
+                        <div class=""><b>
+                            <a href="viewClientDetails?client_id={{client[0]}}">{{client[1]}} ({{average_rating}})</a>
+                        </b></div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                         <div class="text-muted">Developer Name</div>
+                        <div class=""><b>
+                            <a href="viewDeveloperDetails?developer_id={{developer[0]}}">{{developer[1]}}</a>
+                        </b></div>
+                    </div>
+                </div>
+                 <div class="mt-1">
+                    <div class="text-muted">Project Title</div>
+                    <div class=""><b>
+                        <a href="viewProjectDetails?project_id={{project[0]}}">{{project[1]}}</a>
+                    </b></div>
+                </div>
+                <div class="mt-1">
+                     <div class="text-muted">Date</div>
+                    <div class=""><b>{{schedule[1]}}</b></div>
+                </div>
+                <div class="mt-1">
+                     <div class="text-muted">Status</div>
+                    <div class=""><b>{{schedule[2]}}</b></div>
+                </div>
+                <div class="row">
+                    {% if session["role"] == 'Developer' and schedule[2] == status_add_schedule:%}
+                    <div class="col-md-6 mt-2">
+                        <a href="accept_schedule?application_id={{schedule[4]}}&project_id={{project[0]}}&schedule_id={{schedule[0]}}"  class="btn btn-success w-100" style="border-radius:50px;">Accept</a>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <a href="reject_schedule?application_id={{schedule[4]}}&project_id={{project[0]}}&schedule_id={{schedule[0]}}"  class="btn btn-danger w-100" style="border-radius:50px;">Reject</a>
+                    </div>
+                    {% endif %}
+<!--                    {% if session["role"] == 'Client' and schedule[2] == status_schedule_accepted:%}-->
+<!--                    <div class="col-md-3"></div>-->
+<!--                    <div class="col-md-6 mt-2">-->
+<!--                        <a href="payAmount?application_id={{schedule[4]}}&project_id={{project[0]}}"  class="btn btn-success w-100" style="border-radius:50px;">Pay Amount</a>-->
+<!--                    </div>-->
+<!--                    {% endif %}-->
+                </div>
+                {% endfor %}
+            </div>
+          </div>
+     </div>
+</div>

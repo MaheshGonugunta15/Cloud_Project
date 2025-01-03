@@ -1,0 +1,50 @@
+{% include 'head.html'%}
+<style>
+  body{
+    background-image:linear-gradient(45deg,rgba(230,70,66, 0.5),rgba(150, 255, 255,.5)), url();
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+</style>
+<script>
+    function validate(){
+        let phone = document.getElementById("phone").value
+        console.log(phone)
+        if(phone.length!=10){
+            alert('PhoneNumber Length Must be Greater than 10')
+            return false
+        }
+        return true
+    }
+</script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="card mt-5 p-3" style="border-radius: 50px 20px;box-shadow: 5px 10px #888888;">
+                <form action="developerRegistration1" method="post" onsubmit="return validate()">
+                    <div class="text-center h4"><b>Developer Registration</b></div>
+                        <div class="mt-3">
+                            <label for="name">Developer Name</label>
+                            <input type="text" name="name" id="name" required placeholder="Enter Name" class="form-control">
+                        </div>
+                        <div class="mt-2">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" required placeholder="Enter Email" class="form-control">
+                        </div>
+                          <div class="mt-2">
+                            <label for="phone">Phone Number</label>
+                            <input type="number" min="0" name="phone" id="phone" required placeholder="Enter Number" class="form-control">
+                        </div>
+                          <div class="mt-2">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" required placeholder="Enter Password" class="form-control">
+                        </div>
+                       <div class="mt-1">
+                            <input type="submit" value="Register" class="btn btn-success w-100" style="margin-top:10px">
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+{% if session["role"] == 'Admin':%}
+    {% include 'adminHead.html' %}
+{% elif session["role"] == 'Client':%}
+    {% include 'clientHead.html' %}
+{% elif session["role"] == 'Developer':%}
+    {% include 'developerHead.html' %}
+{% else:%}
+    {% include 'head.html' %}
+{% endif %}
+
+{% if session['role'] == 'Client' or session["role"] == 'Developer':%}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 mt-1">
+                 <div class="text-center mt-2 h5"><b>Reviews</b></div>
+               <div class=" card mt-2 p-3" style="border-radius: 50px 20px;box-shadow: 5px 10px #888888;" >
+                    <form action="project_reviews1" method="get">
+                        <input type="hidden" name="project_id" value="{{project_id}}">
+                        <input type="hidden" name="developer_id" value="{{developer_id}}">
+                        <div class="mt-2">
+                            <label for="review" class="form-label">Review</label>
+                            <textarea rows="3" name="review" id="review" placeholder="Give Review" required class="form-control"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mt-2">
+                                <label for="rating" class="form-label">Ratings</label>
+                                <select name="rating" id="rating" required class="form-control">
+                                    <option value="">Choose Rating</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5"></div>
+                            <div class="col-md-3 mt-4">
+                                    <input type="submit" value="Add Comment" class="btn btn-primary w-100" style="border-radius: 50px 20px;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+

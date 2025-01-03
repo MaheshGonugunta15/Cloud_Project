@@ -1,0 +1,36 @@
+{% if session["role"] == 'Admin':%}
+    {% include 'adminHead.html' %}
+{% elif session["role"] == 'Client':%}
+    {% include 'clientHead.html' %}
+{% elif session["role"] == 'Developer':%}
+    {% include 'developerHead.html' %}
+{% else:%}
+    {% include 'head.html' %}
+{% endif %}
+
+<div class="container">
+     <div class="row">
+         <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <div class="card mt-5 p-3" style="border-radius: 50px 20px;box-shadow: 5px 10px #888888;">
+                <div class="text-center mt-1" style="font-size:30px;color:black">Client Details</div>
+                <div class="mt-1">
+                    <div class="text-muted">Client Name</div>
+                    <div class=""><b>{{client[1]}}</b></div>
+                </div>
+                 <div class="mt-1">
+                    <div class="text-muted">Email</div>
+                    <div class=""><b>{{client[2]}}</b></div>
+                </div>
+                 <div class="mt-1">
+                    <div class="text-muted">Phone Number</div>
+                    <div class=""><b>{{client[4]}}</b></div>
+                </div>
+                 <div class="mt-1">
+                    <div class="text-muted">Address</div>
+                    <div class=""><b>{{client[5]}}</b></div>
+                </div>
+            </div>
+          </div>
+     </div>
+</div>

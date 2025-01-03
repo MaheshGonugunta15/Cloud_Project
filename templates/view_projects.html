@@ -1,0 +1,164 @@
+{% if session["role"] == 'Admin':%}
+    {% include 'adminHead.html' %}
+{% elif session["role"] == 'Client':%}
+    {% include 'clientHead.html' %}
+{% elif session["role"] == 'Developer':%}
+    {% include 'developerHead.html' %}
+{% else:%}
+    {% include 'head.html' %}
+{% endif %}
+
+<div class="container">
+    <div class="row">
+        <form action="view_projects" method="get">
+            <div class="row">
+            <div class="col-md-4">
+                  <div class="mt-3">
+                    <select name="category_id" id="category_id" required class="form-control" onchange="this.form.submit()">
+                        <option value="">Choose Category</option>
+                        {% for category in categories%}
+                        <option value="{{category[0]}}">{{category[1]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                  <div class="mt-3">
+                    <select name="skill" id="skill" required class="form-control" onchange="this.form.submit()">
+                        <option value="">Choose Skill</option>
+                        {% for skill in skills:%}
+                        <option value="{{skill[3]}}">{{skill[3]}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 mt-3">
+                <input type="text" name="project_title" class="form-control" placeholder="Search For Project Title" onkeyup="this.form.submit()">
+            </div>
+            </div>
+        </form>
+            {% for project_detail in project_details:%}
+            {% set category = get_category_id(project_detail[7])%}
+
+            {% set client = get_client_id(project_detail[8])%}
+            {% set average_rating = get_client_id_by_reviews(project_detail[8])%}
+            {% set developer = get_project_id_by_application(project_detail[0])%}
+              {% if developer!=None%}
+              {% set isPaid = isAmountPaid(developer[0],project_detail[0])%}
+               {% set isReview = isReview(developer[0],project_detail[0])%}
+             {% endif%}
+
+            <div class=" card mt-3 p-3" style="border-radius: 50px 20px;box-shadow: 5px 10px #888888;" >
+                <div class="row">
+                 <div class="col-md-2 mt-1">
+                     <div class="text-muted">Client Name</div>
+                    <a href="viewClientDetails?client_id={{client[0]}}">{{client[1]}}</a>
+                </div>
+                <div class="col-md-2">
+                    <div class="text-muted">Category Name</div>
+                    <div class=""><b>{{category[1]}}</b></div>
+                </div>
+                <div class="col-md-2 mt-1">
+                    <div class="text-muted">Project Title</div>
+                    <div class=""><b>{{project_detail[1]}}</b></div>
+                </div>
+                <div class="col-md-1 mt-1">
+                    <div class="text-muted">Skills</div>
+                    <div class=""><b>{{project_detail[3]}}</b></div>
+                </div>
+                <div class="col-md-1 mt-1">
+                    <div class="text-muted">Price</div>
+                    <div class=""><b>$ {{project_detail[2]}}</b></div>
+                </div>
+                <div class="col-md-1 mt-1">
+                     <div class="text-muted">Date</div>
+                    <div class=""><b>{{project_detail[9].strftime("%x")}}</b></div>
+                </div>
+                    <div class="col-md-3 mt-1">
+                        <div class="text-muted">Status</div>
+                        <div class=""><b>{{project_detail[6]}}</b></div>
+                   </div>
+                    <div class="col-md-10 mt-1"></div>
+                <div class="col-md-2 mt-1">
+                    <a href="{{project_detail[4]}}"  class="btn btn-primary w-70" style="border-radius:50px;">View Documents</a>
+                </div>
+                </div>
+                 <div class="mt-2">
+                    <div class="text-muted">Description</div>
+                    <div class="mt-1 h6">{{project_detail[5]}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 mt-2">
+                         <div class="text-muted">Developer Name</div>
+                         <a href="viewDeveloperDetails?developer_id={{developer[0]}}">{{developer[1]}}</a>
+                    </div>
+                </div>
+                <div class="row">
+                    {% if session['role']=='Client'%}
+                     {% if  project_detail[6] == 'Project Completed'%}
+                      {% if isPaid==0%}
+                     <div class="col-md-2 mt-1">
+                        <a href="payAmount?project_id={{project_detail[0]}}&developer_id={{developer[0]}}"  class="btn btn-primary w-90" style="border-radius:50px;">Pay Amount</a>
+                    </div>
+                    {% else%}
+                     <div class="col-md-2 mt-1">
+                        <a href="view_payments?project_id={{project_detail[0]}}" class="btn btn-secondary w-100"  style="border-radius:50px;">Payments</a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    {% endif%}
+                    {% if session['role']=='Developer'%}
+                     {% if developer!=None%}
+                     {% if isPaid> 0%}
+                     <div class="col-md-2 mt-1">
+                        <a href="view_payments?project_id={{project_detail[0]}}" class="btn btn-secondary w-100"  style="border-radius:50px;">Payments</a>
+                    </div>
+                    {% endif%}
+                    {% endif%}
+                    {% endif%}
+                    {% if session["role"] == 'Developer' and project_detail[6] == status_application_posted:%}
+                     <div class="col-md-2 mt-1">
+                        <a href="apply_for_project?project_id={{project_detail[0]}}"  class="btn btn-secondary w-90" style="border-radius:50px;">Apply For Project</a>
+                    </div>
+                    {% endif %}
+                     {% if project_detail[6] == status_applied_for_project or project_detail[6] == status_add_schedule or project_detail[6] == status_schedule_accepted or project_detail[6] == status_Development_Started or project_detail[6] == status_project_completed:%}
+                     <div class="col-md-2 mt-1">
+                        <a href="view_applied_projects?project_id={{project_detail[0]}}"  class="btn btn-primary w-90" style="border-radius:50px;">View Applications</a>
+                    </div>
+                    {% endif %}
+
+                    {% if project_detail[6] == status_add_schedule or project_detail[6] == status_schedule_accepted or project_detail[6] == status_Development_Started or project_detail[6] == status_project_completed:%}
+                     <div class="col-md-2 mt-1">
+                        <a href="view_schedule?project_id={{project_detail[0]}}"  class="btn btn-success w-100" style="border-radius:50px;">View Schedule</a>
+                    </div>
+                    {% endif %}
+                    {% if project_detail[6] == status_add_schedule or project_detail[6] == status_schedule_accepted or project_detail[6] == status_Development_Started:%}
+                    <div class="col-md-2 mt-1">
+                    {% if session["role"] == 'Developer' %}
+                        <a href="make_as_complete?project_id={{project_detail[0]}}" class="btn btn-secondary w-100" style="border-radius:50px;">Make As Complete</a>
+                    {% endif %}
+                    </div>
+                    {% endif %}
+                     {% if project_detail[6] == status_add_schedule or project_detail[6] == status_schedule_accepted or project_detail[6] == status_Development_Started or project_detail[6] == status_project_completed:%}
+                    <div class="col-md-4 mt-1"></div>
+                    <div class="col-md-2 mt-1">
+
+                         {% if session["role"] == 'Client' %}
+                        {% if isReview==0%}
+                        <a href="project_reviews?project_id={{project_detail[0]}}&developer_id={{developer[0]}}"  style="border-radius:50px;">Review For Developer</a>
+                        {% endif %}
+                        {% endif%}
+                    </div>
+                    {% endif %}
+<!--                    {% if project_detail[6] == status_add_schedule or project_detail[6] == status_schedule_accepted or project_detail[6] == status_Development_Started or project_detail[6] == status_project_completed:%}-->
+<!--                    <div class="col-md-2 mt-1">-->
+<!--                        <a href="view_payments?project_id={{project_detail[0]}}" class="btn btn-secondary w-100"  style="border-radius:50px;">Payments</a>-->
+<!--                    </div>-->
+<!--                    {% endif %}-->
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+

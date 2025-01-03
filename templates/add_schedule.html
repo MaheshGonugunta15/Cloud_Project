@@ -1,0 +1,24 @@
+{% include 'clientHead.html' %}
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <div class="card mt-5 p-3" style="border-radius: 50px 20px;box-shadow: 5px 10px #888888;">
+       <form action="add_schedule1" method="post">
+           <input type="hidden" name="application_id" value="{{application_id}}">
+        <div class="text-center h4"><b>Add Schedule</b></div>
+        <div class="mt-3">
+          <label for="date_time" class="form-label">Date</label>
+          <input type="datetime-local" name="date_time" id="date_time" placeholder="Enter Email" required class="form-control">
+        </div>
+           <div class="row">
+               <div class="col-md-3"></div>
+               <div class="col-md-6 mt-3">
+                  <input type="submit" value="Add" class="btn btn-success w-100" style="border-radius:50px;">
+              </div>
+           </div>
+        </form>
+    </div>
+  </div>
+</div>
+
