@@ -17,7 +17,7 @@ import boto3 as boto3
 Freelancer_System_Access_Key = "AKIA5IJOXBK3ZWUXXM7S"
 Freelancer_System_Secret_Access_Key = "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"
 Freelancer_System_bucket = "freelancer-bucket-cc"
-Freelancer_System_Email_Source = 'gm6714gm@gmail.com'
+Freelancer_System_Email_Source = 'mm@gmail.com'
 Freelancer_System_s3_client = boto3.client('s3', aws_access_key_id=Freelancer_System_Access_Key, aws_secret_access_key=Freelancer_System_Secret_Access_Key)
 Freelancer_System_ses_client = boto3.client('ses', aws_access_key_id=Freelancer_System_Access_Key, aws_secret_access_key=Freelancer_System_Secret_Access_Key, region_name='us-east-1')
 
@@ -854,3 +854,4 @@ def logout():
 
 
 app.run(debug=True,port=80,host="0.0.0.0")
+
